@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Personality Prediction</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap">
+	<style>
+	  body {
+		font-family: "Kanit", sans-serif;
+		background-color: #1f1f1f;
+		color: #fff;
+	  }
+	  input[type="file"], input[type="submit"] {
+  font-family: "Kanit", sans-serif;
+}
+	  
+	  h1 {
+		text-align: center;
+		margin-top: 50px;
+		color: #fff;
+	  }
+			form {
+		width: 400px;
+		margin: 50px auto;
+		padding: 20px;
+		background-color: #2f2f2f;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	  
+	  label {
+		display: block;
+		margin-bottom: 10px;
+		color: #fff;
+	  }
+	  
+	  input[type="file"] {
+		margin-bottom: 20px;
+		margin-left: 114px;
+		margin-top: 8px;
+		color: #fff;
+	  }
+	  
+	  
+	  input[type="submit"] {
+		display: block;
+		margin: 0 auto;
+		background-color: #F4EDED;
+		color: #000;
+		padding: 10px 20px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-top: 45px;
+		transition: background-color 0.3s ease-in-out;
+	  }
+	  
+	  input[type="submit"]:hover {
+		background-color: #3e8e41;
+	  }
+	  
+	</style>
+</head>
+<body>
+	<h1>Personality Prediction</h1>
+	<form action="{% url 'predict' %}" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<label for="image" class="custom-file-upload">Upload Image</label>
+		<input type="file" id="image" name="image">
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>

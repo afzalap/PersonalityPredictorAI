@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Predictions</title>
+</head>
+<body>
+	<h1>Predictions</h1>
+	<!-- <img src="{{ img_path }}" width="100"><br><br> -->
+	<table>
+		<thead>
+			<tr>
+				<th>Trait</th>
+				<th>Prediction</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for trait, prediction in predictions.items %}
+			<tr>
+				<td>{{ trait }}</td>
+				<td>{{ prediction }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>
