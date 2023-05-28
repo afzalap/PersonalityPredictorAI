@@ -70,7 +70,7 @@
 		<thead>
 			<tr>
 				<th style="text-align: left;">Trait</th>
-				<th >Prediction</th>
+				<th >Feature</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -78,6 +78,22 @@
 			<tr>
 				<td style="text-align: left;">{{ trait }}</td>
 				<td>{{ prediction }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<table>
+		<thead>
+			<tr>
+				<th style="text-align: left;">Feature</th>
+				<th >Trait</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for Feature, Trait in traits_img_processing.items %}
+			<tr>
+				<td style="text-align: left;">{{ Feature }}</td>
+				<td>{{ Trait }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>

@@ -8,6 +8,7 @@ import numpy as np
 from .extract import *
 from django.conf import settings
 import os
+from PIL import Image
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 # import argparse
 
@@ -31,6 +32,7 @@ def predict(request):
         # project_root = settings.PROJECT_ROOT
         print(os.path.join(settings.BASE_DIR, "media", filename))
         img = cv2.imread(os.path.join(settings.BASE_DIR, "media", filename))
+       
         # print(os.path.isfile(os.path.join(project_root, img_path)))
         # print(os.path.join(settings.PROJECT_ROOT, img_path))
         # print(os.path.join(project_root, 'media', img_path))
@@ -42,16 +44,22 @@ def predict(request):
         #     print("False")
         predictions, features_list = predict_personality_traits(img)
 
+        with Image.open(os.path.join(settings.BASE_DIR, "media", filename)) as img:
+            dpi = img.info.get('dpi')
+            mm_per_px = 25.4 / dpi[0]
+        traits_img_processing = get_traits(features_list, mm_per_px)
+        
+
         featureValue = {
             'BASE_LINE_ANGLE': str(round(features_list[0], 2)) + " deg",
             'TOP_MARGIN': str(round(features_list[1], 2)) + " % of whole page",
-            'LINE_SPACING': str(round(features_list[2] * 0.0846, 2)) + " mm",
+            'LINE_SPACING': str(round(features_list[2] * mm_per_px, 2)) + " mm",
             'SLANT_ANGLE': str(round(features_list[3], 2)) + " deg",
-            'WORD_SPACING': str(round(features_list[4] * 0.0846, 2)) + " mm",
-            'LETTER_SIZE': str(round(features_list[5] * 0.0846, 2)) + " mm"
+            'WORD_SPACING': str(round(features_list[4] * mm_per_px, 2)) + " mm",
+            'LETTER_SIZE': str(round(features_list[5] * mm_per_px, 2)) + " mm"
         }
 
-        return render(request, 'predict.html', {'predictions': predictions,'img_path': img_path, 'featureValue':featureValue})
+        return render(request, 'predict.html', {'predictions': predictions,'img_path': img_path, 'featureValue':featureValue, 'traits_img_processing' : traits_img_processing})
     return render(request, 'predict.html')
 
 
@@ -121,3 +129,85 @@ def predict_personality_traits(img):
     print("\n\n\n")
 
     return predictions, features_list
+
+
+def get_traits(features_list, mm_per_px):
+    # get_baseline(features_list[0])
+    # get_top_margin(features_list[1])
+    # get_line_spacing(features_list[2] * mm_per_px)
+    # get_slant_of_writing(features_list[3])
+    # get_spacing_between_words(features_list[4] * mm_per_px)
+    # get_size_of_letters(features_list[5] * mm_per_px)
+
+    traits_img_processing = {
+            'BASE_LINE_ANGLE': get_baseline(features_list[0]),
+            'TOP_MARGIN': get_top_margin(features_list[1]),
+            'SLANT_ANGLE': get_slant_of_writing(features_list[3]),
+            'LETTER_SIZE': get_size_of_letters(features_list[5] * mm_per_px)
+    }
+
+    return traits_img_processing
+
+def get_size_of_letters(size_of_letters):
+    if size_of_letters > 3:
+        return "Boldness"
+    elif 2.5 < size_of_letters < 3:
+        return "Adaptability"
+    elif 1.5 < size_of_letters < 2.5:
+        return "Modesty"
+    return None
+
+
+def get_slant_of_writing(slant_of_writing):
+    if slant_of_writing == 0:
+        return "Independence"
+    elif 0 < slant_of_writing <= 15:
+        return "Empathy"
+    elif 16 <= slant_of_writing <= 30:
+        return "Goal-orientation"
+    elif 31 <= slant_of_writing <= 45:
+        return "Passion"
+    elif -15 <= slant_of_writing < 0:
+        return "Charm"
+    elif -30 <= slant_of_writing < -15:
+        return "Independence"
+    elif -45 <= slant_of_writing < -30:
+        return "Evasiveness"
+    return None
+
+
+
+
+def get_baseline(baseline):
+    if -30 <= baseline <= -5:
+        return "Fatigue"
+    elif -5 <= baseline <= 5:
+        return "Dependability"
+    elif 5 <= baseline <= 30:
+        return "Ambition"
+    return None
+
+
+def get_top_margin(top_margin):
+    if 0 <= top_margin <= 10:
+        return "Focus"
+    elif 10 <= top_margin <= 20:
+        return "Balance"
+    elif top_margin > 20:
+        return "Creativity"
+    return None
+
+
+def get_spacing_between_words(spacing_between_words):
+    if spacing_between_words == "Closely Spaced":
+        return "Hostility"
+    elif spacing_between_words == "Evenly Spaced":
+        return "Self-Confidence"
+    elif spacing_between_words == "Widely Spaced":
+        return "Extroversion"
+    return None
+
+def get_line_spacing(line_spacing):
+    if line_spacing == "Heavy":
+        return ""
+

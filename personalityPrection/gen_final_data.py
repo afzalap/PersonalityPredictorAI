@@ -1,7 +1,7 @@
 import os
 def is_extroverted(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person is extroverted based on the given features
-    if letter_size > 3 and slant_angle == 90 and word_spacing == "wide" and top_margin > 0.2 or line_spacing == "heavy":
+    if letter_size > 3 and -1 < slant_angle <= 1 or top_margin > 20 or line_spacing == "heavy" or word_spacing == "wide":
         return 1
     else:
         return 0
@@ -9,7 +9,7 @@ def is_extroverted(base_line_angle, top_margin, line_spacing, slant_angle, word_
 
 def is_introverted(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person is introverted based on the given features
-    if letter_size < 2.5 and slant_angle > 105 and top_margin < 0.1 or word_spacing == "closely spaced"  or line_spacing == "normal":
+    if letter_size < 2.5 and -15 <= slant_angle < 0 and top_margin < 20 or word_spacing == "closely spaced"  or line_spacing == "normal":
         return 1
     else:
         return 0
@@ -17,7 +17,7 @@ def is_introverted(base_line_angle, top_margin, line_spacing, slant_angle, word_
 
 def has_emotional_stability(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person has emotional stability based on the given features
-    if base_line_angle >= -5 and base_line_angle <= 5 or a1":
+    if -5 <= base_line_angle <= 5 or word_spacing == "evenly spaced":
         return 1
     else:
         return 0
@@ -25,7 +25,8 @@ def has_emotional_stability(base_line_angle, top_margin, line_spacing, slant_ang
 
 def is_neurotic(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person is neurotic based on the given features
-    if base_line_angle >= -30 and base_line_angle <= -5 and slant_angle in [90, 75, 60, 45, 105, 120, 135]:
+    # or slant_angle in [90, 75, 60, 45, 105, 120, 135]
+    if -30 <= base_line_angle <= -5:
         return 1
     else:
         return 0
@@ -33,7 +34,7 @@ def is_neurotic(base_line_angle, top_margin, line_spacing, slant_angle, word_spa
 
 def is_open_to_experience(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person is open to experience based on the given features
-    if letter_size >= 2.5 and letter_size <= 3 and slant_angle in [60, 75] or word_spacing == "evenly spaced" or line_spacing in ["normal", "heavy"]:
+    if 2.5 <= letter_size <= 3 and 0 <= slant_angle <= 30 or word_spacing == "evenly spaced" or line_spacing in ["normal", "heavy"]:
         return 1
     else:
         return 0
@@ -41,7 +42,7 @@ def is_open_to_experience(base_line_angle, top_margin, line_spacing, slant_angle
 
 def is_conscientious(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person is conscientious based on the given features
-    if letter_size >= 1.5 and letter_size <= 2.5  and top_margin < 0.1 or word_spacing == "evenly spaced" :
+    if 1.5 <= letter_size <= 2.5  and top_margin < 10 or word_spacing == "evenly spaced" :
         return 1
     else:
         return 0
@@ -49,7 +50,7 @@ def is_conscientious(base_line_angle, top_margin, line_spacing, slant_angle, wor
 
 def is_agreeable(base_line_angle, top_margin, line_spacing, slant_angle, word_spacing, letter_size):
     # Determine if the person is agreeable based on the given features
-    if letter_size >= 2.5 and letter_size <= 3 and slant_angle in [60, 75] or word_spacing == "evenly spaced" or line_spacing == "normal":
+    if 2.5 <=letter_size <= 3 and 0 <= slant_angle <= 30 or word_spacing == "evenly spaced" or line_spacing == "normal":
         return 1
     else:
         return 0

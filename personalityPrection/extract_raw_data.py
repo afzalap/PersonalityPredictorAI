@@ -3,6 +3,7 @@ import cv2
 import csv
 from extract import extract_feature
 import time
+from PIL import Image
 
 start_time = time.time()
 
@@ -19,7 +20,7 @@ if os.path.isfile("lists/raw_features.csv"):
     with open("lists/raw_features.csv", "r") as f:
         reader = csv.reader(f)
         for row in reader:
-            page_id = row[-1]
+            page_id = row[-4]
             page_ids.add(page_id)
             count = len(page_ids)
 
@@ -36,10 +37,23 @@ with open("lists/raw_features.csv", "a", newline='') as f:
         print(os.path.join(directory, file_name))
         features = extract_feature(img)
 
+
+        with Image.open(os.path.join(directory, file_name)) as img:
+            width, height = img.size
+            dpi = img.info.get('dpi')
+            if dpi:
+                print(f"Image size: {width} x {height} pixels")
+                print(f"Resolution: {dpi[0]} x {dpi[1]} dpi")
+                mm_per_px = 25.4 / dpi[0] # assuming 1 inch = 25.4 mm
+                print(f"1 pixel = {mm_per_px:.3f} mm")
+            else:
+                print("Error: Image DPI not found.")
+
+
         #rounding everythin to 2 decimal point
         # features = [round(feature, 2) for feature in features]
         # Append the extracted features and file name to the feature list file.
-        writer.writerow(features + [file_name])
+        writer.writerow(features + [file_name, height, width, dpi[0]])
         count += 1
         # Print progress to the console.
         progress = (count * 100) // len(os.listdir(directory))

@@ -13,7 +13,7 @@
 
 # # Print the image resolution and DPI on the terminal
 # print(f"Image size: {size}")
-# print(f"Image DPI: {dpi}")
+# print(f"Image DPI: {dpi}" )
 
 
 from PIL import Image

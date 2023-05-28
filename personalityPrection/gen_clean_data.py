@@ -1,15 +1,17 @@
 import pandas as pd
 
 # Read the features from the CSV file
-df = pd.read_csv('lists/raw_data.csv', header=None, names=["BASE_LINE_ANGLE", "TOP_MARGIN", "LINE_SPACING", "SLANT_ANGLE", "WORD_SPACING", "LETTER_SIZE", "file_name"])
+df = pd.read_csv('lists/raw_data.csv', header=None, names=["BASE_LINE_ANGLE", "TOP_MARGIN", "LINE_SPACING", "SLANT_ANGLE", "WORD_SPACING", "LETTER_SIZE", "file_name", "height", "width", "dpi" ])
 
 # Convert line spacing, word spacing, and letter size to pixel values
-def to_pixel(x):
-    return 0.086 * float(x)
 
-df['LINE_SPACING'] = df['LINE_SPACING'].apply(to_pixel)
-df['WORD_SPACING'] = df['WORD_SPACING'].apply(to_pixel)
-df['LETTER_SIZE'] = df['LETTER_SIZE'].apply(to_pixel)
+def to_mm(dpi, x):
+    return (25.4 / dpi) * float(x)
+
+df['LINE_SPACING'] = df.apply(lambda row: to_mm(row['dpi'], row['LINE_SPACING']), axis=1)
+df['WORD_SPACING'] = df.apply(lambda row: to_mm(row['dpi'], row['WORD_SPACING']), axis=1)
+df['LETTER_SIZE'] = df.apply(lambda row: to_mm(row['dpi'], row['LETTER_SIZE']), axis=1)
+
 
 # Convert columns to numeric and round to 2 decimal places
 df['BASE_LINE_ANGLE'] = pd.to_numeric(df['BASE_LINE_ANGLE'], errors='coerce').round(2)
