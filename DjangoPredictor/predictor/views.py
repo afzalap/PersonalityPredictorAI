@@ -42,21 +42,25 @@ def predict(request):
         #     print("True")
         # else:
         #     print("False")
-        predictions, features_list = predict_personality_traits(img)
 
-        with Image.open(os.path.join(settings.BASE_DIR, "media", filename)) as img:
-            dpi = img.info.get('dpi')
+        with Image.open(os.path.join(settings.BASE_DIR, "media", filename)) as img2:
+            dpi = img2.info.get('dpi')
             mm_per_px = 25.4 / dpi[0]
+
+        print(mm_per_px)
+        predictions, features_list = predict_personality_traits(img, mm_per_px)
+
+        
         traits_img_processing = get_traits(features_list, mm_per_px)
         
 
         featureValue = {
-            'BASE_LINE_ANGLE': str(round(features_list[0], 2)) + " deg",
-            'TOP_MARGIN': str(round(features_list[1], 2)) + " % of whole page",
-            'LINE_SPACING': str(round(features_list[2] * mm_per_px, 2)) + " mm",
-            'SLANT_ANGLE': str(round(features_list[3], 2)) + " deg",
-            'WORD_SPACING': str(round(features_list[4] * mm_per_px, 2)) + " mm",
-            'LETTER_SIZE': str(round(features_list[5] * mm_per_px, 2)) + " mm"
+            'BASE_LINE_ANGLE': str(features_list[0]) +  " deg",
+            'TOP_MARGIN': str(features_list[1]) + " % of whole page",
+            'LINE_SPACING': str(features_list[2]) + " mm",
+            'SLANT_ANGLE': str(features_list[3]) + " deg",
+            'WORD_SPACING': str(features_list[4]) + " mm",
+            'LETTER_SIZE': str(features_list[5]) + " mm"
         }
 
         return render(request, 'predict.html', {'predictions': predictions,'img_path': img_path, 'featureValue':featureValue, 'traits_img_processing' : traits_img_processing})
@@ -88,10 +92,20 @@ features = {
     'Agreeableness': [5, 3, 2, 4]
 }
 
-def predict_personality_traits(img):
+def predict_personality_traits(img, mm_per_px):
     # Extract the features from the input image
     
-    features_list = extract_feature(img)
+    features_list_ = extract_feature(img)
+    indices = [2, 4, 5]  # The indices to multiply with 'x'
+    for index in indices:
+        features_list_[index] *= mm_per_px
+    features_list =[round(float(num), 2) for num in features_list_]
+    print(features_list)
+
+    
+
+    
+
     # features_list = [0,1,2,3,4,5]
 
     # Initialize an empty dictionary to store the predicted personality traits
@@ -112,8 +126,13 @@ def predict_personality_traits(img):
         # Make a prediction using the loaded model and extracted features
         prediction = model.predict(trait_features_array)[0]
 
+        print(prediction)
+
         # Store the predicted personality trait in the dictionary
         predictions[trait] = prediction
+
+        print(predictions)
+
 
 
     from tabulate import tabulate
@@ -143,7 +162,7 @@ def get_traits(features_list, mm_per_px):
             'BASE_LINE_ANGLE': get_baseline(features_list[0]),
             'TOP_MARGIN': get_top_margin(features_list[1]),
             'SLANT_ANGLE': get_slant_of_writing(features_list[3]),
-            'LETTER_SIZE': get_size_of_letters(features_list[5] * mm_per_px)
+            'LETTER_SIZE': get_size_of_letters(features_list[5])
     }
 
     return traits_img_processing
@@ -211,3 +230,4 @@ def get_line_spacing(line_spacing):
     if line_spacing == "Heavy":
         return ""
 
+# C=100, gamma=0.5
