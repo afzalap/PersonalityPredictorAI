@@ -162,7 +162,7 @@ def get_traits(features_list, mm_per_px):
             'BASE_LINE_ANGLE': get_baseline(features_list[0]),
             'TOP_MARGIN': get_top_margin(features_list[1]),
             'SLANT_ANGLE': get_slant_of_writing(features_list[3]),
-            'LETTER_SIZE': get_size_of_letters(features_list[5] * mm_per_px)
+            'LETTER_SIZE': get_size_of_letters(features_list[5])
     }
 
     return traits_img_processing
