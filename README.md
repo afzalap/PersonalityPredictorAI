@@ -27,7 +27,7 @@ The project is organized into two main directories:
 2. personalityPrection:
    - This directory is dedicated to feature extraction and model building. It includes scripts and modules for extracting relevant graphological features from handwriting samples and training machine learning models for personality prediction. It performs the necessary data preprocessing, feature engineering, and model training steps.
 
-The project structure is designed to separate the front-end web application (DjangoPredictor) from the back-end feature extraction and model building (personalityPrection). This modular organization allows for easier maintenance, scalability, and future improvements.
+The project structure is designed to separate the web application (DjangoPredictor) from the feature extraction and model building (personalityPrection). This modular organization allows for easier maintenance, scalability, and future improvements.
 
 Feel free to explore the respective directories to understand the implementation details and make any necessary modifications based on your specific requirements.
 
