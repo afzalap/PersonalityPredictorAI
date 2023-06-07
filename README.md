@@ -10,10 +10,19 @@ The project's GitHub repository can be found at: [https://github.com/afzalap/Per
 
 ## Table of Contents
 
+- [Dataset Overview](#dataset-overview)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Data Preparation](#data-preparation)
 - [License](#license)
+
+## Dataset Overview
+
+The dataset used for training and evaluation consists of a total of 1839 samples from 657 different writers. 
+
+- 1539 samples of 657 were taken from the IAM Handwriting Dataset (http://www.fki.inf.unibe.ch/databases/iam-handwriting-database) which provides a diverse collection of handwritten documents.
+
+- Additional 300 samples were collected from 100 writers who volunteered from friends and family.
 
 ## Installation
 
