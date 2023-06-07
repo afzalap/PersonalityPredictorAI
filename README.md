@@ -10,7 +10,7 @@ The project's GitHub repository can be found at: [https://github.com/afzalap/Per
 
 ## Table of Contents
 
-- [Project Structure](project-structure)
+- [Project Structure](#project-structure)
 - [Dataset Overview](#dataset-overview)
 - [Installation](#installation)
 - [Usage](#usage)
