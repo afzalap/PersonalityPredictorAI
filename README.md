@@ -68,7 +68,7 @@ To install the necessary packages, run the following command:
 
 ## Data Preparation
 
-The input to the web App should be in the following cropped form containing only the handwritten text
+The input to the web App and the samples in the personalityPrection/data should be in the following cropped form containing only the handwritten text
 
 
 <img src="https://github.com/afzalap/PersonalityPredictorAI/assets/68552769/18cdabd7-1268-4794-8f13-09cebfa956c7" alt="Image" width="300" height="300"/>
