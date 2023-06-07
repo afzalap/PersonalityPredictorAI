@@ -6,6 +6,8 @@ The system incorporates image processing methods to analyze and extract relevant
 
 A user-friendly web application has been developed to provide an intuitive interface for users to input their handwriting samples and receive personality trait predictions. The web application ensures easy accessibility and convenience, eliminating the need for specialized software or technical expertise.
 
+The project's GitHub repository can be found at: https://github.com/afzalap/PersonalityPredictorAI
+
 To install the necessary packages, run the following command:
 
   pip install -r requirements.txt
