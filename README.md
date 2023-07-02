@@ -15,6 +15,7 @@ The project's GitHub repository can be found at: [https://github.com/afzalap/Per
 - [Installation](#installation)
 - [Usage](#usage)
 - [Data Preparation](#data-preparation)
+- [Demo](#demo)
 - [License](#license)
 
 ## Project Structure
@@ -87,6 +88,12 @@ The input to the web App and the samples in the personalityPrection/data should 
 
 
 <img src="https://github.com/afzalap/PersonalityPredictorAI/assets/68552769/18cdabd7-1268-4794-8f13-09cebfa956c7" alt="Image" width="300" height="300"/>
+
+## Demo
+
+
+https://github.com/afzalap/PersonalityPredictorAI/assets/68552769/7af75fc0-0c87-46d4-9237-3594c8258061
+
 
 
 ## License
